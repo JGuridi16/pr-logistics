@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
   <div class="container-fluid">
-    <router-link class="navbar-brand" :to="{ name: 'home' }">
+    <router-link class="navbar-brand rounded" :to="{ name: 'home' }">
       <img :src="appLogo" alt="app-logo" />
     </router-link>
     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#burgerNavbar">
@@ -18,8 +18,10 @@
 import { computed } from "vue";
 import { getStaticImage } from '@/utils/utilities';
 
-const appLogo = computed(() => getStaticImage('assets/images/ferries_caribe_logo.png'));
+const appLogo = computed(() => getStaticImage('assets/images/pr-logistics-logo.png'));
 </script>
 <style scoped>
-
+.navbar-brand {
+  background: lightgray;
+}
 </style>
