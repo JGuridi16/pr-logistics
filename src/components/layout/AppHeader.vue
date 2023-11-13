@@ -21,7 +21,4 @@ import { getStaticImage } from '@/utils/utilities';
 const appLogo = computed(() => getStaticImage('assets/images/pr-logistics-logo.png'));
 </script>
 <style scoped>
-.navbar-brand {
-  background: lightgray;
-}
 </style>
