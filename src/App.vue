@@ -7,8 +7,6 @@
   </div>
 </template>
 <script setup>
-import { AppHeader } from '@/components/layout'
-</script>
-
-<style scoped>
+import { AppHeader } from '@/components/layout';
+</script><style scoped>
 </style>

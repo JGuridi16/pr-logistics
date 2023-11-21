@@ -1,107 +1,106 @@
 <template>
   <div class="container-fluid row mx-auto p-0">
-    <Form v-slot="{ validate, resetForm, values }" :validation-schema="schema" class="form bg-light row mx-auto px-0 py-3 col-12 col-md-6 offset-md-3 my-3 fs-14 shadow rounded">
+    <VeeForm v-slot="{ validate, resetForm, values }" :validation-schema="schema" class="form bg-light row mx-auto px-0 py-3 col-12 col-md-6 offset-md-3 my-3 fs-14 shadow rounded">
       <div class="header mb-4 col-12">
-        <h6 class="text-muted">Los datos suministrados deben ser del titular o dueño de la tarjeta de crédito</h6>
+        <h6 class="text-muted">{{ capitalize(t('theInformationProvidedMustBeThatOfTheHolderOrOwnerOfTheCreditCard')) }}.</h6>
       </div>
       <div class="name-input mb-2 col-12 col-md-6">
-        <label for="name" class="form-label">Nombre:</label>
-        <Field type="text" class="form-control" id="name" v-model="name" name="name" />
-        <ErrorMessage v-slot="{ message }" name="name">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="name" class="form-label">{{ capitalize(t('name')) }}:</label>
+        <VeeField type="text" class="form-control" id="name" v-model="name" name="name" />
+        <VeeErrorMessage v-slot="{ message }" name="name">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="lastname-input mb-2 col-12 col-md-6">
-        <label for="lastname" class="form-label">Apellido:</label>
-        <Field type="text" class="form-control" id="lastname" v-model="lastname" name="lastname" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="lastname">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="lastname" class="form-label">{{ capitalize(t('lastname')) }}:</label>
+        <VeeField type="text" class="form-control" id="lastname" v-model="lastname" name="lastname" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="lastname">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
-      <div class="reservation-input mb-2 col-12 col-md-6">
-        <label for="reservation" class="form-label">Número de Reservación:</label>
-        <Field type="number" class="form-control" id="reservation" v-model="reservationNumber" name="reservationNumber" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="reservationNumber">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+      <div class="invoice-number-input mb-2 col-12 col-md-6">
+        <label for="invoice-number" class="form-label">{{upperEach(t('invoiceNumber'), upperEachOptions)}}:</label>
+        <VeeField type="text" class="form-control" id="invoice-number" v-model="invoiceNumber" name="invoiceNumber" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="invoiceNumber">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="email-input mb-2 col-12 col-md-6">
-        <label for="email" class="form-label">Correo:</label>
-        <Field type="email" class="form-control" id="email" v-model="email" name="email" placeholder="example@gmail.com"/>
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="email">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="email" class="form-label">{{ capitalize(t('email')) }}:</label>
+        <VeeField type="email" class="form-control" id="email" v-model="email" name="email" placeholder="example@gmail.com"/>
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="email">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="address-input mb-2 col-12 col-md-6">
-        <label for="address" class="form-label">Dirección:</label>
-        <Field type="text" class="form-control" id="address" v-model="address" name="address" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="address">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="address" class="form-label">{{ capitalize(t('address')) }}:</label>
+        <VeeField type="text" class="form-control" id="address" v-model="address" name="address" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="address">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="phone-input mb-2 col-12 col-md-6">
-        <label for="phone" class="form-label">Teléfono:</label>
-        <Field max="10" type="phone" class="form-control" id="phone" v-model="phone" name="phone" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="phone">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="phone" class="form-label">{{ capitalize(t('phone')) }}:</label>
+        <VeeField max="10" type="phone" class="form-control" id="phone" v-model="phone" name="phone" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="phone">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="zip-area-input mb-2 col-12 col-md-6">
-        <label for="zipArea" class="form-label">Código Postal:</label>
-        <Field type="text" class="form-control" id="zipArea" v-model="zipArea" name="zipArea" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="zipArea">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="zipArea" class="form-label">{{ upperEach(t('zipCode'), upperEachOptions) }}:</label>
+        <VeeField type="text" class="form-control" id="zipArea" v-model="zipArea" name="zipArea" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="zipArea">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="credit-card-input mb-2 col-12 col-md-6">
-        <label for="credit-card" class="form-label">Tarjeta de Crédito:</label>
-        <Field v-maska="bindedMask" data-maska="#### #### #### ####" type="text" class="form-control" id="credit-card" v-model="creditCard" name="creditCard" placeholder="#### #### #### ####" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="creditCard">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="credit-card" class="form-label">{{ upperEach(t('creditCard'), upperEachOptions) }}:</label>
+        <VeeField v-maska="bindedMask" data-maska="#### #### #### ####" type="text" class="form-control" id="credit-card" v-model="creditCard" name="creditCard" placeholder="#### #### #### ####" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="creditCard">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="expiration-date-input mb-2 col-12 col-md-6">
-        <label for="expirationDate" class="form-label">Fecha de Expiración:</label>
-        <Field type="date" class="form-control" id="expirationDate" v-model="expirationDate" name="expirationDate" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="expirationDate">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="expirationDate" class="form-label">{{ upperEach(t('expirationDate'), upperEachOptions) }}:</label>
+        <VeeField type="date" class="form-control" id="expirationDate" v-model="expirationDate" name="expirationDate" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="expirationDate">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="security-code-input mb-2 col-12 col-md-6">
-        <label for="securityCode" class="form-label">Código de Seguridad:</label>
-        <Field type="text" class="form-control" id="securityCode" v-model="securityCode" name="securityCode" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="securityCode">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="securityCode" class="form-label">{{ upperEach(t('securityCode'), upperEachOptions) }}:</label>
+        <VeeField type="text" class="form-control" id="securityCode" v-model="securityCode" name="securityCode" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="securityCode">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="amount-input mb-2 col-12 col-md-6">
-        <label for="amount" class="form-label">Monto:</label>
-        <Field type="number" class="form-control" id="amount" v-model="amount" name="amount" />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="amount">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <label for="amount" class="form-label">{{ capitalize(t('amount')) }}:</label>
+        <VeeField type="number" class="form-control" id="amount" v-model="amount" name="amount" />
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="amount">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="identification-photo mb-2 col-12 col-md-6">
-        <label for="identification-photo" class="form-label">Documento de Identificación:</label>
-        <Field type="file" class="form-control" id="identification-photo" v-model="identificationPhoto"
+        <label for="identification-photo" class="form-label">{{ upperEach(t('identificationDocument'), upperEachOptions) }}:</label>
+        <VeeField type="file" class="form-control" id="identification-photo" v-model="identificationPhoto"
           name="identificationPhoto" accept="image/*"
         />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="identificationPhoto">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
-        {{ message }}
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="identificationPhoto">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="card-info-image mb-2 col-12 col-md-6">
-        <label for="card-info-image" class="form-label">Foto de Tarjeta:</label>
-        <Field type="file" class="form-control" id="card-info-image" v-model="cardInfoImage"
+        <label for="card-info-image" class="form-label">{{ upperEach(t('creditCardPicture'), upperEachOptions) }}:</label>
+        <VeeField type="file" class="form-control" id="card-info-image" v-model="cardInfoImage"
           name="cardInfoImage" accept="image/*"
         />
-        <ErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="cardInfoImage">
-          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ message }}</div>
-        </ErrorMessage>
+        <VeeErrorMessage v-slot="{ message }" class="invalid-message text-danger" name="cardInfoImage">
+          <div class="invalid-message text-danger"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(message)}.`) }}</div>
+        </VeeErrorMessage>
       </div>
       <div class="col-12 signature-container mt-3">
-        <div class="h5">Pad de Firma</div>
+        <div class="h5">{{ upperEach(t('signaturePad'), upperEachOptions) }}</div>
         <custom-signature-pad
           ref="signatureRef"
           :key="signatureKey"
@@ -112,37 +111,44 @@
         <div class="toolbar d-flex justify-content-end bg-white rounded">
           <button type="button" class="btn btn-outline-secondary" @click="onClear">
             <i class="fas fa-broom" />
-            <span class="ms-2">Limpiar</span>
+            <span class="ms-2">{{ capitalize(t('clear')) }}</span>
           </button>
           <button type="button" class="btn btn-secondary ms-2" @click="onUndo">
             <i class="fas fa-undo" />
-            <span class="ms-2">Rehacer</span>
+            <span class="ms-2">{{ capitalize(t('redo')) }}</span>
           </button>
         </div>
-        <p class="invalid-message text-danger" v-if="signatureError"><i class="fa fa-info-circle text-danger me-1"></i>{{ signatureError }}</p>
+        <p class="invalid-message text-danger" v-if="signatureError"><i class="fa fa-info-circle text-danger me-1"></i>{{ capitalize(`${t(signatureError)}.`) }}</p>
       </div>
       <div class="row mx-auto col-12 mt-3">
         <button
           class="col-12 btn btn-success"
           type="button"
           :disabled="isSubmissionLocked"
-          @click="onSubmit({ validate, resetForm, values })"
+          @click="onSubmit({ validate, resetForm, values, setErrors })"
         >
-          Guardar
+          {{ capitalize(t('save')) }}
         </button>
       </div>
-    </Form>
+    </VeeForm>
   </div>
 </template>
 <script setup>
 import { CustomSignaturePad } from '@/components/common';
 import { vMaska } from 'maska';
-import { computed, reactive, ref, watch } from 'vue';
-import { Field, Form, ErrorMessage } from 'vee-validate';
+import { useI18n } from 'vue-i18n';
+import { computed, reactive, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/stores/userStore.js';
 import * as Yup from 'yup';
 import { saveSignatureData as _saveSignatureData } from '@/services/signature.api.js';
 import Swal from 'sweetalert2';
+import { capitalize, upperEach } from '@/utils/utilities';
+import { languages } from '@/utils/constants/languages';
 
+const store = useUserStore();
+const { getLanguage } = storeToRefs(store);
+const { t, locale } = useI18n();
 const MAX_FILE_SIZE = 2097152; //2 MB
 
 const signatureRef = ref(null);
@@ -152,37 +158,56 @@ const signatureKey = ref(0);
 const bindedMask = reactive({});
 const isSubmissionLocked = ref(false);
 
+const nameError = computed(() => ({ min: 'form.validation.min3characters', required: 'form.validation.theNameIsRequired' }));
+const lastnameError = computed(() => ({ min: 'form.validation.min3characters', required: 'form.validation.theLastnameIsRequired' }));
+const phoneError = computed(() => ({ typeError: 'form.validation.phoneTypeError', required: 'form.validation.thePhoneIsRequired' }));
+const emailError = computed(() => ({ email: 'form.validation.invalidEmail', required: 'form.validation.theEmailIsRequired' }));
+const addressError = computed(() => ({ min: 'form.validation.min3characters', required: 'form.validation.theAddressIsRequired' }));
+const creditCardError = computed(() => ({ required: 'form.validation.theCreditCardIsRequired' }));
+const invoiceNumberError = computed(() => ({ required: 'form.validation.theInvoiceNumberIsRequired' }));
+const zipAreaError = computed(() => ({ isAreaCode: 'form.validation.invalidZipCode', required: 'form.validation.theZipCodeIsRequired' }));
+const securityCodeError = computed(() => ({ isSecurityCode: 'form.validation.invalidSecurityCode', required: 'form.validation.theSecurityCodeIsRequired' }));
+const expirationDateError = computed(() => ({ required: 'form.validation.theExpirationDateIsRequired' }));
+const amountError = computed(() => ({ required: 'form.validation.theAmountIsRequired' }));
+const identificationPhotoError = computed(() => ({ isValidSize: 'form.validation.invalidFileSize2MB', required: 'form.validation.theIdentificationDocumentIsRequired' }));
+const cardInfoImageError = computed(() => ({ isValidSize: 'form.validation.invalidFileSize2MB', required: 'form.validation.theCreditCardPictureIsRequired' }));
+const signatureError = computed(() => (isEmptySignature.value && wasValidated.value ? 'form.validation.theSignatureIsRequired': ''));
+
 const schema = Yup.object({
-  name: Yup.string().min(3, 'Mínimo tres caracteres.').required('El nombre es requerido.'),
-  lastname: Yup.string().min(3, 'Mínimo tres caracteres.').required('El apellido es requerido.'),
-  phone: Yup.number().typeError('El teléfono debe ser un número válido.').required('El número de teléfono es requerido.'),
-  email: Yup.string().email('Correo inválido.').required('El correo electrónico es requerido.'),
-  address: Yup.string().min(3, 'Mínimo tres caracteres.').required('La dirección es requerida.'),
-  creditCard: Yup.string().required('La tarjeta de crédito es requerida.'),
-  reservationNumber: Yup.number().required('El número de reservación es requerido.'),
-  zipArea: Yup.string().required('El número de área es requerido.')
-    .test("is-area-code", "El número de área solo contiene números.", 
+  name: Yup.string().min(3, nameError.value.min).required(nameError.value.required),
+  lastname: Yup.string().min(3, lastnameError.value.min).required(lastnameError.value.required),
+  phone: Yup.number().typeError(phoneError.value.typeError).required(phoneError.value.required),
+  email: Yup.string().email(emailError.value.email).required(emailError.value.required),
+  address: Yup.string().min(3, addressError.value.min).required(addressError.value.required),
+  creditCard: Yup.string().required(creditCardError.value.required),
+  invoiceNumber: Yup.string().required(invoiceNumberError.value.required),
+  zipArea: Yup.string().required(zipAreaError.value.required)
+    .test("is-area-code", zipAreaError.value.isAreaCode, 
       value => value && !isNaN(value)),
-  securityCode: Yup.string().required('El código de seguridad es requerido.')
-    .test("is-security-code", "El código de seguridad solo contiene números.", 
+  securityCode: Yup.string().required(securityCodeError.value.required)
+    .test("is-security-code", securityCodeError.value.isSecurityCode, 
       value => value && !isNaN(value)),
-  expirationDate: Yup.string().required('La fecha de expiración es requerida.'),
-  amount: Yup.number().required('El monto es requerido.'),
-  identificationPhoto: Yup.mixed().required('La foto de identificación es requerida.')
-    .test("is-valid-size", "El tamaño máximo permitido por archivo es 2MB.", 
+  expirationDate: Yup.string().required(expirationDateError.value.required),
+  amount: Yup.number().required(amountError.value.required),
+  identificationPhoto: Yup.mixed().required(identificationPhotoError.value.required)
+    .test("is-valid-size", identificationPhotoError.value.isValidSize, 
       value => value && value.size <= MAX_FILE_SIZE),
-  cardInfoImage: Yup.mixed().required('La foto de la tarjeta es requerida.')
-    .test("is-valid-size", "El tamaño máximo permitido por archivo es 2MB.", 
+  cardInfoImage: Yup.mixed().required(cardInfoImageError.value.required)
+    .test("is-valid-size", cardInfoImageError.value.isValidSize, 
       value => value && value.size <= MAX_FILE_SIZE),
 });
 
-const signatureError = computed(() => (isEmptySignature.value && wasValidated.value ? 'La firma es requerida.': ''));
+const isSpanishLanguage = computed(() => {
+  return getLanguage.value === languages.Spanish;
+});
+
+const upperEachOptions = computed(() => isSpanishLanguage.value ? ['de'] : []);
 
 const validateSignature = () => {
   isEmptySignature.value = signatureRef.value.isEmpty();
 };
 
-const onSubmit = async ({ validate, resetForm, values }) => {
+const onSubmit = async ({ validate, resetForm, values, setErrors }) => {
   if (isSubmissionLocked.value) return;
   
   const { valid } = await validate();
@@ -201,7 +226,7 @@ const onSubmit = async ({ validate, resetForm, values }) => {
   data.append('address', values.address);
   data.append('expirationDate', values.expirationDate);
   data.append('creditCard', bindedMask.unmasked);
-  data.append('reservationNumber', Number(values.reservationNumber));
+  data.append('invoiceNumber', Number(values.invoiceNumber));
   data.append('signature', signatureRef.value.save());
   data.append('amount', Number(values.amount));
   data.append('securityCode', values.securityCode);
@@ -211,13 +236,10 @@ const onSubmit = async ({ validate, resetForm, values }) => {
     isSubmissionLocked.value = true;
     const { data: isSaved } = await _saveSignatureData(data);
 
-    // ++signatureKey.value;
-    // await resetForm();
-
     if (!isSaved) return; 
 
     await Swal.fire({
-      title: '¡Datos guardados exitosamente!',
+      title: capitalize(t('successfullySaved')),
       icon: 'success',
       timer: 3000,
       timerProgressBar: true,
