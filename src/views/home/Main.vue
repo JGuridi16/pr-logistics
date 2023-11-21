@@ -239,7 +239,7 @@ const onSubmit = async ({ validate, resetForm, values, setErrors }) => {
     if (!isSaved) return; 
 
     await Swal.fire({
-      title: capitalize(t('successfullySaved')),
+      title: `${isSpanishLanguage.value ? '!' : ''}${capitalize(t('successfullySaved'))}`,
       icon: 'success',
       timer: 3000,
       timerProgressBar: true,
